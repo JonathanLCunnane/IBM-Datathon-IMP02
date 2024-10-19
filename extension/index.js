@@ -11,14 +11,6 @@ scanVideosButton.addEventListener("click", scanVideos);
 
 const mainPage = document.getElementById("main-page");
 
-const imagesPage = document.getElementById("images-page");
-const imagesList = document.getElementById("images-list");
-const imagesBackButton = document.getElementById("images-back-button");
-const imagesPrevButton = document.getElementById("images-prev-button");
-const imagesNextButton = document.getElementById("images-next-button");
-let currentImagePage = 1; // Track the current page
-const imagesPerPage = 5; // Number of images to show per page
-
 imagesBackButton.addEventListener("click", () => {
     imagesPage.classList.toggle("hidden");
     mainPage.classList.toggle("hidden");
@@ -43,6 +35,24 @@ function scanText() {
             enableButtons();
         });
 }
+
+//------------------- Images -------------------
+
+const imagesPage = document.getElementById("images-page");
+const imagesList = document.getElementById("images-list");
+const imagesBackButton = document.getElementById("images-back-button");
+const imagesPrevButton = document.getElementById("images-prev-button");
+const imagesNextButton = document.getElementById("images-next-button");
+let currentImagePage = 1; // Track the current page
+const imagesPerPage = 5; // Number of images to show per page
+
+imagesBackButton.addEventListener("click", () => {
+    imagesPage.classList.toggle("hidden");
+    mainPage.classList.toggle("hidden");
+});
+
+imagesPrevButton.addEventListener("click", showPrevImages);
+imagesNextButton.addEventListener("click", showNextImages);
 
 function scanImages() {
     disableButtons();
@@ -128,6 +138,9 @@ function scanImage(imageUrl) {
             enableButtons();
         });
 }
+
+// ------------------------------------------------
+
 function scanVideos() {
     disableButtons();
     // TODO
