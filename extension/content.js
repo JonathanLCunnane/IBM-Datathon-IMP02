@@ -33,19 +33,20 @@ async function scanText() {
 
     // Send the collected text to the server
     try {
-        const response = await fetch('https://example.com/scanText', { // Replace with actual server URL
+        const response = await fetch('http://localhost:5000/scan_text', { // Replace with actual server URL
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ texts: textList })
+            body: JSON.stringify({ text: textList })
         });
 
+
         const data = await response.json();
-        scores = data.scores;
+        console.log(data);
 
         // Assume `data` contains an array of scores corresponding to the text blocks
-        data.scores.forEach((fakeScore, index) => {
+        data.forEach((fakeScore, index) => {
             if (fakeScore < 0.2) {
                 elements[index].css(borderCSS("#A3DDCB"));
             } else if (fakeScore < 0.5) {
@@ -57,7 +58,7 @@ async function scanText() {
             }
         });
 
-        return { status: "OK", text: textList, scores: data.scores }; // Return the response from the server
+        return { status: "OK", text: textList, scores: data }; // Return the response from the server
 
     } catch (error) {
         console.error("Error sending text to the server:", error);
