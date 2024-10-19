@@ -6,7 +6,19 @@
 
 @layer components {
     .button {
+        @apply disabled:bg-darkBackground;
         @apply p-2 bg-verify rounded-lg shadow-xl;
     }
-    /* ... */
+    .correct {
+        @apply border-l-4 border-correct;
+    }
+    .likelyCorrect {
+        @apply border-l-4 border-likelyCorrect;
+    }
+    .likelyIncorrect {
+        @apply border-l-4 border-likelyIncorrect;
+    }
+    .incorrect {
+        @apply border-l-4 border-incorrect;
+    }
 }
