@@ -129,7 +129,8 @@ function scanImage(imageUrl) {
             chrome.tabs.sendMessage(tabs[0].id, {action: "scanImage", imgUrl: imageUrl})
         })
         .then(result => {
-            console.log("Scan Complete");
+            // TODO: Display result or something
+            console.log(result.data);
             enableButtons();
         });
 }
