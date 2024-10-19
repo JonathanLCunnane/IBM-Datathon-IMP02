@@ -11,13 +11,6 @@ scanVideosButton.addEventListener("click", scanVideos);
 
 const mainPage = document.getElementById("main-page");
 
-imagesBackButton.addEventListener("click", () => {
-    imagesPage.classList.toggle("hidden");
-    mainPage.classList.toggle("hidden");
-});
-
-imagesPrevButton.addEventListener("click", showPrevImages);
-imagesNextButton.addEventListener("click", showNextImages);
 
 function scanAll() {
     disableButtons();
@@ -54,6 +47,8 @@ imagesBackButton.addEventListener("click", () => {
 imagesPrevButton.addEventListener("click", showPrevImages);
 imagesNextButton.addEventListener("click", showNextImages);
 
+
+
 function scanImages() {
     disableButtons();
     // Query the current tab to send a message to the content script
@@ -82,7 +77,7 @@ function scanImages() {
                         scanButton.textContent = "Scan";
                         scanButton.className = "button";
                         scanButton.addEventListener("click", () => {
-                            scanImages(img.src);
+                            scanImage(img.src);
                         });
                         
                         // Create images, but make them hidden for now
