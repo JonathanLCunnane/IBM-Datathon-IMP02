@@ -12,4 +12,4 @@ def predict_fakeness(path):
     result = classifier(image)
 
     # Output the classification result
-    return(result["FAKE"])
+    return(result[0]['score'])
