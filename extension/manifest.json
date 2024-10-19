@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Safe News",
+  "description": "A web scraper for generating statistics about news data.",
+  "version": "1.0",
+  "action": {
+    "default_popup": "./index.html",
+    "default_icon": "./img/logo.png"
+  },
+  "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["./content.js"]
+      }
+    ]
+}
