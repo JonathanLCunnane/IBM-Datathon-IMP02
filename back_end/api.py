@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import os
 import fake_news_text_detector.detector as text_scanner
 import deepfake_image_detector.detector as image_scanner
@@ -10,6 +11,7 @@ UPLOAD_FOLDER = 'uploads/'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 app = Flask(__name__)
+CORS(app)
 
 # Load the model once when the API starts (text model)
 model_dir = './fake_news_text_detector/fakenews_model'  # Ensure the model is in this directory

@@ -1,10 +1,10 @@
-const scanAllButton = document.getElementById("scanAllButton");
+const summariseButton = document.getElementById("summaryButton");
 const scanTextButton = document.getElementById("scanTextButton");
 const scanImagesButton = document.getElementById("scanImagesButton");
 const scanVideosButton = document.getElementById("scanVideosButton");
-const scanButtons = [scanAllButton, scanTextButton, scanImagesButton, scanVideosButton];
+const scanButtons = [summariseButton, scanTextButton, scanImagesButton, scanVideosButton];
 
-scanAllButton.addEventListener("click", scanAll);
+summariseButton.addEventListener("click", summarise);
 scanTextButton.addEventListener("click", scanText);
 scanImagesButton.addEventListener("click", scanImages);
 scanVideosButton.addEventListener("click", scanVideos);
@@ -12,7 +12,7 @@ scanVideosButton.addEventListener("click", scanVideos);
 const mainPage = document.getElementById("main-page");
 
 
-function scanAll() {
+function summarise() {
     disableButtons();
     scanText();
 }
