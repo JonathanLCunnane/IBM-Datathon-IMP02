@@ -54,7 +54,7 @@ function scanImages() {
     // Query the current tab to send a message to the content script
     chrome.tabs.query({ active: true, currentWindow: true })
         .then(tabs => {
-            chrome.tabs.sendMessage(tabs[0].id, { action: "scanImages" }, (response) => {
+            chrome.tabs.sendMessage(tabs[0].id, { action: "scrapeImages" }, (response) => {
                 if (response && response.images) {
                     // Hide main content and show images container
                     
