@@ -6,6 +6,7 @@
 
 @layer components {
     .button {
+        @apply disabled:bg-darkBackground;
         @apply p-2 bg-verify rounded-lg shadow-xl;
     }
     /* ... */
