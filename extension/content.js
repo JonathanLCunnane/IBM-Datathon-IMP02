@@ -3,11 +3,16 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         case "scanText":
             sendResponse({data: scanText()});
             break;
+        case "scanImages":
+            sendResponse({images: scanImages()});
+            break;
+        case "scanImage":
+            scanImage(request.imgUrl);
+            break;
     }
 
 });
 
-// Use jQuery
 function scanText() {
     let textList = [];
     $("p, h1, h2, h3, h4, h5, h6, blockquote").each(function() {
@@ -30,6 +35,17 @@ function scanText() {
     return textList;
 }
 
+function scanImages() {
+    let images = [];
+    $("img").each(function() {
+        images.push($(this).attr("src"));
+    });
+    return images;
+}
+
+function scanImage(targetUrl) {
+    // TODO Send image to server
+}
 function borderCSS(colour) {
     return {
         "box-shadow": `-4px 0px 1px -1px ${colour}`,
