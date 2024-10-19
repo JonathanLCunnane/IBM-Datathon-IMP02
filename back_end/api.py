@@ -13,7 +13,27 @@ app = Flask(__name__)
 
 # Load the model once when the API starts (text model)
 model_dir = './fake_news_text_detector/fakenews_model'  # Ensure the model is in this directory
-tokenizer, model, device = text_scanner.load_model(model_dir)
+classifier = text_scanner.load_model()
+
+def convert_to_jpg(file_path):
+    """
+    Convert the input image to JPEG format.
+    Returns the new file path.
+    """
+    print(file_path)
+    if len(file_path.rsplit(".")) < 2:
+        file_path = file_path + ".webp"
+    img = Image.open(file_path)
+    
+    # Ensure the conversion only happens for non-JPEG files
+    if img.format != 'JPEG':
+        rgb_img = img.convert('RGB')  # Convert to RGB if necessary (to avoid issues with transparency)
+        jpg_path = file_path.rsplit('.', 1)[0] + '.jpg'  # Change the extension to .jpg
+        rgb_img.save(jpg_path, 'JPEG')
+        return jpg_path
+    
+    # If already a JPEG, return the original path
+    return file_path
 
 @app.route('/scan_text', methods=['POST'])
 def scan_text():
@@ -30,7 +50,7 @@ def scan_text():
         texts = [texts]  # Convert a single string into a list
 
     # Run the fake news detection
-    scores = text_scanner.predict_fakeness(tokenizer, model, device, texts)
+    scores = text_scanner.predict_fakeness(classifier, texts)
     
     # Prepare the response
     response = []
@@ -53,7 +73,7 @@ def scan_image():
         return jsonify({"error": "No file or URL provided."}), 400
     
     try:
-        if file and allowed_file(file.filename):
+        if file :#and allowed_file(file.filename):
             # Save uploaded file to upload folder
             file_path = os.path.join(UPLOAD_FOLDER, file.filename)
             file.save(file_path)
@@ -74,6 +94,8 @@ def scan_image():
 
         else:
             return jsonify({"error": "Invalid file format or unsupported URL."}), 400
+        
+        file_path = convert_to_jpg(file_path)
 
         # Process the image using your image_scanner module
         result = image_scanner.predict_fakeness(file_path)
@@ -96,7 +118,6 @@ def allowed_file(filename):
     """
     allowed_extensions = {'png', 'jpg', 'jpeg', 'gif'}
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
-
 
 # Starting point for the Flask app
 if __name__ == '__main__':
