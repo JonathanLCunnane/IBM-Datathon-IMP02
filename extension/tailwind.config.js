@@ -4,13 +4,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // TODO: Decide Colour Scheme.
+        background: '#D8EFD3',
+        darkBackground: '#95D2B3',
+        verify: '#399918',
       }
     },
     fontFamily: {
-      // TODO: Decide Font.
+      sans: ['Roboto', 'Arial', 'sans-serif']
     }
   },
   plugins: [],
 }
-
