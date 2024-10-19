@@ -7,12 +7,16 @@
     <title>Safe News</title>
     <link rel="stylesheet" href="./css/main.css">
   </head>
-  <body class="bg-lightCream">
+  <body class="bg-background">
     <main>
-      <div>
-        <h1>Safe News</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, laborum.</p>
-        <button id="scanButton">Begin Scan</button>
+      <div class="m-5 w-80">
+        <h1 class="text-2xl text-center mb-2">Safe News</h1>
+        <div id="button-grid" class="grid grid-cols-3 gap-4 justify-items-stretch">
+          <button id="scanAllButton" class="button col-span-3">Scan All</button>
+          <button id="scanTextButton" class="button">Text</button>
+          <button id="scanImagesButton" class="button">Images</button>
+          <button id="scanVideosButton" class="button">Videos</button>
+        </div>
         <div id="result" class="hidden">
           <p> XX% match to our known fake/real news in our dataset. </p>
           <a href="#" id="showMoreResult">Show More</a>
