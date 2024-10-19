@@ -1,11 +1,11 @@
 from transformers import pipeline
 from PIL import Image
 
-# Load the image classification pipeline with the model "Organika/sdxl-detector"
+# Load the image classification pipeline
 classifier = pipeline("image-classification", model="dima806/ai_vs_real_image_detection")
 
 def predict_fakeness(path):
-    # Open an image (replace 'your_image.jpg' with the path to your image)
+    # Open an image
     image = Image.open(path)
 
     # Classify the image
