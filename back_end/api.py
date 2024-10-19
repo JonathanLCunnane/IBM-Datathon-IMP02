@@ -4,10 +4,10 @@ from fake_news_text_detector.detector import load_model, predict_fakeness, get_f
 app = Flask(__name__)
 
 # Load the model once when the API starts
-model_dir = './fakenews_model'  # Make sure the model is in this directory
+model_dir = './fake_news_text_detector/fakenews_model'  # Make sure the model is in this directory
 tokenizer, model, device = load_model(model_dir)
 
-@app.route('/predict', methods=['POST'])
+@app.route('/scantext', methods=['POST'])
 def predict():
     """
     API endpoint to predict fake news based on input text.
@@ -34,13 +34,8 @@ def predict():
     
     # Prepare the response
     response = []
-    for text, score in zip(texts, scores):
-        label = get_fake_news_label(score)
-        response.append({
-            "text": text,
-            "fakeness_score": score,
-            "label": label
-        })
+    for score in scores:
+        response.append(float(score))
     
     return jsonify(response), 200
 
