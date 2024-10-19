@@ -1,40 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Safe News</title>
     <link rel="stylesheet" href="./css/main.css">
-  </head>
-  <body class="bg-background">
-    <main>
-      <div id="main-page" class="m-5 w-80">
+</head>
+<body class="bg-background">
+<main>
+    <div id="main-page" class="m-5 w-80">
         <h1 class="text-2xl text-center mb-2">Safe News</h1>
         <div id="button-grid" class="grid grid-cols-3 gap-4 justify-items-stretch">
-          <button id="scanAllButton" class="button col-span-3">Scan All</button>
-          <button id="scanTextButton" class="button">Text</button>
-          <button id="scanImagesButton" class="button">Images</button>
-          <button id="scanVideosButton" class="button">Videos</button>
+            <button id="scanAllButton" class="button col-span-3">Scan All</button>
+            <button id="scanTextButton" class="button">Text</button>
+            <button id="scanImagesButton" class="button">Images</button>
+            <button id="scanVideosButton" class="button">Videos</button>
         </div>
         <div id="result" class="hidden">
-          <p> XX% match to our known fake/real news in our dataset. </p>
-          <a href="#" id="showMoreResult">Show More</a>
+            <p> XX% match to our known fake/real news in our dataset. </p>
+            <a href="#" id="showMoreResult">Show More</a>
         </div>
-      </div>
+    </div>
 
-      <div id="images-page" class="m-5 w-80 hidden">
-        <h2 class="text-2xl text-center mb-2">Images</h2>
-                <div id="images-list"></div>
-                <!-- Paginatio buttons-->
-                <div id="images-pagination" class="flex justify-center mt-5">
-                    <button id="images-prev-button" class="button">Prev</button>
-                    <button id="images-next-button" class="button">Next</button>
-                <button id="images-back-button" class="button">Back</button>
+    <div id="images-page" class="m-5 w-80 hidden">
+        <button id="images-back-button" class="button">Back</button>
+        <h2 class="text-2xl text-center mb-2 col-span-4">Images</h2>
+        <div class="grid grid-cols-5 gap-4 justify-items-stretch">
 
-      </div>
-    </main>
-    <script src="./index.js"></script>
-  </body>
+        </div>
+        <div id="images-list" class="grid grid-cols-1 gap-4"></div>
+        <!-- Pagination buttons-->
+        <div id="images-pagination" class="flex justify-center mt-5 gap-4">
+            <button id="images-prev-button" class="button">Prev</button>
+            <button id="images-next-button" class="button">Next</button>
+        </div>
+    </div>
+</main>
+<script src="./index.js"></script>
+</body>
 </html>
 

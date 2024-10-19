@@ -37,7 +37,7 @@ const imagesBackButton = document.getElementById("images-back-button");
 const imagesPrevButton = document.getElementById("images-prev-button");
 const imagesNextButton = document.getElementById("images-next-button");
 let currentImagePage = 1; // Track the current page
-const imagesPerPage = 5; // Number of images to show per page
+const imagesPerPage = 4; // Number of images to show per page
 
 imagesBackButton.addEventListener("click", () => {
     imagesPage.classList.toggle("hidden");
@@ -68,24 +68,24 @@ function scanImages() {
                     response.images.forEach((imageUrl, index) => {
                         const img = document.createElement("img");
                         img.src = imageUrl;
-
-                        img.style.maxWidth = "100px";
+                        img.style.maxWidth = "150px";
                         img.style.maxHeight = "100px";
-                        // img.className = "float-left w-24 h-24 object-cover rounded"; // Tailwind classes for styling
+                        img.className = "flex-auto"; // Tailwind classes for styling
 
                         const scanButton = document.createElement("button");
                         scanButton.textContent = "Scan";
-                        scanButton.className = "button";
+                        scanButton.className = "button flex-none";
                         scanButton.addEventListener("click", () => {
                             scanImage(img.src);
                         });
                         
                         // Create images, but make them hidden for now
-                        const imageContainer = document.createElement("div");
-                        imageContainer.className = "grid grid-cols-2 justify-items-stretch"; // Flexbox layout
-                        imageContainer.appendChild(img);
-                        imageContainer.appendChild(scanButton);
-                        imagesList.appendChild(imageContainer);
+                        const imageScanPair = document.createElement("div");
+                        imageScanPair.className = "flex place-items-center justify-center gap-4"; // Flexbox layout
+
+                        imageScanPair.appendChild(img);
+                        imageScanPair.appendChild(scanButton);
+                        imagesList.appendChild(imageScanPair);
                     });
 
                     // Show only imagesPerPage images on the currentPage
