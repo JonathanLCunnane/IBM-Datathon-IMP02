@@ -112,13 +112,23 @@ function showNextImages() {
     if (currentImagePage * imagesPerPage < imagesList.children.length) {
         currentImagePage++;
         showImagesPerPage();
+        imagesPrevButton.disabled = false;
+    } 
+    if ((currentImagePage) * imagesPerPage >= imagesList.children.length) {
+        imagesNextButton.disabled = true;
     }
+    // Disable next button if we're at the last page
+
 }
 
 function showPrevImages() {
     if (currentImagePage > 1) {
         currentImagePage--;
         showImagesPerPage();
+        imagesNextButton.disabled = false;
+    }
+    if (currentImagePage === 1) {
+        imagesPrevButton.disabled = true;
     }
 }
 
