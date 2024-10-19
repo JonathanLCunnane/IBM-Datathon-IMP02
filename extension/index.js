@@ -21,6 +21,7 @@ function scanText() {
             chrome.tabs.sendMessage(tabs[0].id, {action: "scanText"})
         })
         .then(result => {
+            console.log("Scan Complete");
             enableButtons();
         });
 }
