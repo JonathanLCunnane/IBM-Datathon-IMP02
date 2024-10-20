@@ -81,7 +81,7 @@ def gen_summary():
     # Run the fake news detection
     scores = text_scanner.predict_fakeness_local(tokenizer, model, device, [text])#predict_fakeness(classifier, texts)
     
-    return jsonify(scores[0]), 200
+    return jsonify([str(round(scores[0]*100))]), 200
 
 @app.route('/scan_image', methods=['POST'])
 def scan_image():

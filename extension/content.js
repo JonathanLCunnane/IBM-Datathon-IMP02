@@ -92,9 +92,9 @@ async function generateSummary() {
         });
 
 
-        const data = await response.json();
+        const [data] = await response.json();
 
-        alert("This artical is predicted to be " + Math.round(data*100) + "% fake.");
+        alert("This article is predicted to be " + data + "% misleading.");
 
         return { status: "OK", text: textList, scores: data }; // Return the response from the server
 
@@ -144,9 +144,9 @@ async function scanImage(targetUrl) {
         let changedScore = Math.max((fakeScore - 0.40) * 10/6, 0.0);
         console.log(changedScore);
         if (changedScore < 0.5) {
-            alert("This image is likely real" + " (" + changedScore + " fake)");
+            alert("This image is unlikely to be misleading" + " (" + Math.round(changedScore*100) + "% misleading)");
         } else {
-            alert("This image is likely fake" + " (" + changedScore + " fake)");
+            alert("This image is likely to be misleading" + " (" + Math.round(changedScore*100) + "% misleading)");
         }
 
         console.log("Image scan result:", fakeScore);

@@ -2,7 +2,7 @@ const summariseButton = document.getElementById("summaryButton");
 const scanTextButton = document.getElementById("scanTextButton");
 const scanImagesButton = document.getElementById("scanImagesButton");
 const scanVideosButton = document.getElementById("scanVideosButton");
-const scanButtons = [summariseButton, scanTextButton, scanImagesButton, scanVideosButton];
+const scanButtons = [summariseButton, scanTextButton, scanImagesButton];
 
 summariseButton.addEventListener("click", summarise);
 scanTextButton.addEventListener("click", scanText);
@@ -17,7 +17,7 @@ function summarise() {
     disableButtons();
     chrome.tabs.query({active: true, currentWindow: true})
     .then(tabs => {
-        chrome.tabs.sendMessage(tabs[0].id, {action: "scanText"})
+        chrome.tabs.sendMessage(tabs[0].id, {action: "summarise"})
         .then(response => {
             console.log("Scan Complete");
                 enableButtons();
@@ -29,7 +29,7 @@ async function scanText() {
     disableButtons()
     chrome.tabs.query({active: true, currentWindow: true})
         .then(tabs => {
-            chrome.tabs.sendMessage(tabs[0].id, {action: "summarise"})
+            chrome.tabs.sendMessage(tabs[0].id, {action: "scanText"})
             .then(response => {
                 console.log("Scan Complete");
                     enableButtons();
