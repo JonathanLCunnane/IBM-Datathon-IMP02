@@ -10,6 +10,7 @@ scanImagesButton.addEventListener("click", scanImages);
 scanVideosButton.addEventListener("click", scanVideos);
 
 const mainPage = document.getElementById("main-page");
+const resultsPage = document.getElementById("results-page");
 
 
 function summarise() {
@@ -17,15 +18,15 @@ function summarise() {
     scanText();
 }
 
-function scanText() {
+async function scanText() {
     disableButtons()
     chrome.tabs.query({active: true, currentWindow: true})
         .then(tabs => {
             chrome.tabs.sendMessage(tabs[0].id, {action: "scanText"})
-        })
-        .then(result => {
-            console.log("Scan Complete");
-            enableButtons();
+            .then(response => {
+                console.log("Scan Complete");
+                    enableButtons();
+            });
         });
 }
 
@@ -136,12 +137,24 @@ function scanImage(imageUrl) {
     disableButtons();
     chrome.tabs.query({active: true, currentWindow: true})
         .then(tabs => {
-            chrome.tabs.sendMessage(tabs[0].id, {action: "scanImage", imgUrl: imageUrl})
-        })
-        .then(result => {
-            // TODO: Display result or something
-            console.log(result.data);
+            chrome.tabs.sendMessage(tabs[0].id, {action: "scanImage", imgUrl: imageUrl}, (result) => {
+            
+            // Display the results
+            const resultText = document.getElementById("result-text");
+            if (result && result.score) {
+
+                resultsPage.classList.toggle("hidden");
+                imagesPage.classList.toggle("hidden");
+
+                let changedScore = (result.score - 0.5) * 2;
+                if (result.score < 0.75) {
+                    resultText.textContent = "This image is likely real" + " (" + changedScore.toFixed(2) + "fake )";
+                } else {
+                    resultText.textContent = "This image is likely fake" + " (" + changedScore.toFixed(2) + "fake )";
+                }
+            }
             enableButtons();
+            });
         });
 }
 

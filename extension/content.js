@@ -13,7 +13,7 @@ chrome.runtime.onMessage.addListener(async function(request, sender, sendRespons
             break;
         case "scanImage":
             const scanData = await scanImage(request.imgUrl);
-            sendResponse({data: scanData});
+            sendResponse(scanData);
             break;
     }
 });
@@ -89,19 +89,28 @@ async function scanImages() {
 
 // Modified scanImage to send image URL to the server and get a fake score
 async function scanImage(targetUrl) {
+    targetUrl = targetUrl.split('?')[0]
     try {
-        const response = await fetch('https://example.com/scanImage', {  // Replace with actual server URL
+        const response = await fetch('http://localhost:5000/scan_image', {  // Replace with actual server URL
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ imageUrl: targetUrl })
+            body: JSON.stringify({ url: targetUrl })
         });
 
         const data = await response.json();
 
         // TODO: Change this to the actual key used in the response
-        const fakeScore = Math.random();
+        const fakeScore = data;
+        let changedScore = Math.max((fakeScore - 0.40) * 10/6, 0.0);
+        console.log(changedScore);
+        if (changedScore < 0.5) {
+            alert("This image is likely real" + " (" + changedScore + " fake)");
+        } else {
+            alert("This image is likely fake" + " (" + changedScore + " fake)");
+        }
+
         console.log("Image scan result:", fakeScore);
         return { status: "OK", score: fakeScore };
 
