@@ -15,13 +15,16 @@ chrome.runtime.onMessage.addListener(async function(request, sender, sendRespons
             const scanData = await scanImage(request.imgUrl);
             sendResponse(scanData);
             break;
+        case "summarise":
+            const summaryData = await generateSummary();
+            sendResponse(summaryData);
+            break;
     }
 });
 
 async function scanText() {
     let textList = [];
     let elements = [];
-    let scores = [];
 
     $("p, h1, h2, h3, h4, h5, h6, blockquote").each(function() {
         if ($(this).text().length < 80) {
@@ -57,6 +60,41 @@ async function scanText() {
                 elements[index].css(borderCSS("#E5707E"));
             }
         });
+
+        return { status: "OK", text: textList, scores: data }; // Return the response from the server
+
+    } catch (error) {
+        console.error("Error sending text to the server:", error);
+        return { status: "Failed to send text to the server" };
+    }
+}
+
+async function generateSummary() {
+    let textList = [];
+    let elements = [];
+
+    $("p, h1, h2, h3, h4, h5, h6, blockquote").each(function() {
+        if ($(this).text().length < 80) {
+            return;
+        }
+        textList.push($(this).text());
+        elements.push($(this));  // Store the jQuery element to style it later
+    });
+
+    // Send the collected text to the server
+    try {
+        const response = await fetch('http://localhost:5000/generate_summary', { // Replace with actual server URL
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ text: textList })
+        });
+
+
+        const data = await response.json();
+
+        alert("This artical is predicted to be " + Math.round(data*100) + "% fake.");
 
         return { status: "OK", text: textList, scores: data }; // Return the response from the server
 

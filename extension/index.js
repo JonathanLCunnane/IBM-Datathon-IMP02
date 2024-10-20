@@ -15,14 +15,21 @@ const resultsPage = document.getElementById("results-page");
 
 function summarise() {
     disableButtons();
-    scanText();
+    chrome.tabs.query({active: true, currentWindow: true})
+    .then(tabs => {
+        chrome.tabs.sendMessage(tabs[0].id, {action: "scanText"})
+        .then(response => {
+            console.log("Scan Complete");
+                enableButtons();
+        });
+    });
 }
 
 async function scanText() {
     disableButtons()
     chrome.tabs.query({active: true, currentWindow: true})
         .then(tabs => {
-            chrome.tabs.sendMessage(tabs[0].id, {action: "scanText"})
+            chrome.tabs.sendMessage(tabs[0].id, {action: "summarise"})
             .then(response => {
                 console.log("Scan Complete");
                     enableButtons();
@@ -47,7 +54,6 @@ imagesBackButton.addEventListener("click", () => {
 
 imagesPrevButton.addEventListener("click", showPrevImages);
 imagesNextButton.addEventListener("click", showNextImages);
-
 
 
 function scanImages() {
