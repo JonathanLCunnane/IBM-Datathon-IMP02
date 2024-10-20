@@ -15,7 +15,8 @@ CORS(app)
 
 # Load the model once when the API starts (text model)
 model_dir = './fake_news_text_detector/fakenews_model'  # Ensure the model is in this directory
-classifier = text_scanner.load_model()
+tokenizer, model, device = text_scanner.load_model_local(model_dir)
+#classifier = text_scanner.load_model()
 
 def convert_to_jpg(file_path):
     """
@@ -52,7 +53,7 @@ def scan_text():
         texts = [texts]  # Convert a single string into a list
 
     # Run the fake news detection
-    scores = text_scanner.predict_fakeness(classifier, texts)
+    scores = text_scanner.predict_fakeness_local(tokenizer, model, device, texts)#predict_fakeness(classifier, texts)
     
     # Prepare the response
     response = []
@@ -60,6 +61,27 @@ def scan_text():
         response.append(float(score))
     
     return jsonify(response), 200
+
+@app.route('/generate_summary', methods=['POST'])
+def gen_summary():
+    """
+    API endpoint to predict fake news based on input text.
+    """
+    data = request.get_json()
+
+    if not data or 'text' not in data:
+        return jsonify({"error": "Invalid input, 'text' field is required."}), 400
+
+    texts = data['text']
+    if isinstance(texts, str):
+        texts = [texts]  # Convert a single string into a list
+    
+    text = "\n".join(texts)
+
+    # Run the fake news detection
+    scores = text_scanner.predict_fakeness_local(tokenizer, model, device, [text])#predict_fakeness(classifier, texts)
+    
+    return jsonify(scores[0]), 200
 
 @app.route('/scan_image', methods=['POST'])
 def scan_image():
